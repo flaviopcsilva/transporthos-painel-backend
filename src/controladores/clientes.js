@@ -23,33 +23,37 @@ const listarClientes = async (req, res) => {
                 id: cliente.id,
                 data: `${data.getDate()}/${data.getMonth() + 1}/${data.getFullYear()}`,
                 hora: horaAbreviada,
-                nome: cliente.cliente,
-                qtd: cliente.qtd,
-                peso: cliente.peso,
-                plCavalo: cliente.plcavalo,
-                plCarreta: cliente.plcarreta,
+                cliente: cliente.cliente,
+                quantidade: cliente.quantidade,
+                di: cliente.di,
+                dta: cliente.dta,
+                tipoDeCarga: cliente.tipo_de_carga,
+                processo: cliente.processo,
+                plCavalo: cliente.pl_cavalo,
+                plCarreta: cliente.pl_carreta,
                 motorista: cliente.motorista,
                 origem: cliente.origem,
                 destino: cliente.destino,
                 ajudantes: cliente.ajudantes,
-                conferentes: cliente.conferentes
+                conferentes: cliente.conferentes,
+                status: cliente.status
 
             };
         });
 
         return res.json(clientesFormatados);
     } catch (error) {
-        console.log(error);
-        return res.status(500).json({ Mensagem: `Erro interno do servidor ${error}` })
+
+        return res.status(500).json({ Mensagem: `Erro interno do servidor em listar clientes ${error}` })
     }
 }
 
 const cadastrarClientes = async (req, res) => {
     try {
-        const { dataAbreviada, horaAbreviada, nome, qtd, peso, plcavalo, plcarreta, motorista, origem, destino, ajudantes, conferentes } = req.body; // Obtenha os dados do corpo da requisição
+        const { dataAbreviada, horaAbreviada, cliente, quantidade, di, dta, tipo_de_carga, processo, pl_cavalo, pl_carreta, motorista, origem, destino, ajudantes, conferente, status } = req.body; // Obtenha os dados do corpo da requisição
 
         // Verifica se todos os campos necessários foram fornecidos na requisição
-        if (!nome || !dataAbreviada || !horaAbreviada) {
+        if (!cliente || !dataAbreviada || !horaAbreviada) {
             return res.status(400).json({ Mensagem: 'Nome, dataAbreviada e horaAbreviada são campos obrigatórios' });
         }
 
@@ -70,25 +74,29 @@ const cadastrarClientes = async (req, res) => {
         // Insere o novo cliente na tabela "clientes2" com os formatos corretos
         await knex('clientes2').insert({
             data: dataFormatada, // Insere a data formatada como Date
-            cliente: nome,
-            qtd,
-            plcavalo,
-            plcarreta,
+            hora: horaFormatada, // Insere a hora formatada como Time
+            cliente,
+            quantidade,
+            di,
+            dta,
+            tipo_de_carga,
+            processo,
+            pl_cavalo,
+            pl_carreta,
             motorista,
             origem,
             destino,
             ajudantes,
-            conferentes,
-            hora: horaFormatada, // Insere a hora formatada como Time
-            peso,
+            conferente,
+            status
         });
 
         const novoCliente = await knex('clientes2').where('id', '=', knex.raw('lastval()')).first();
 
         return res.status(201).json({ Mensagem: 'Cliente cadastrado com sucesso', novoCliente });
     } catch (error) {
-        console.log(error);
-        return res.status(500).json({ Mensagem: `Erro interno do servidor ${error}` });
+
+        return res.status(500).json({ Mensagem: `Erro interno do servidor em cadastro de clientes ${error}` });
     }
 }
 
@@ -127,23 +135,27 @@ const buscarCliente = async (req, res) => {
                 id: cliente.id,
                 data: `${data.getDate()}/${data.getMonth() + 1}/${data.getFullYear()}`,
                 hora: horaAbreviada,
-                nome: cliente.cliente,
-                qtd: cliente.qtd,
-                peso: cliente.peso,
-                plCavalo: cliente.plcavalo,
-                plCarreta: cliente.plcarreta,
+                cliente: cliente.cliente,
+                quantidade: cliente.quantidade,
+                di: cliente.di,
+                dta: cliente.dta,
+                tipoDeCarga: cliente.tipo_de_carga,
+                processo: cliente.processo,
+                pl_cavalo: cliente.pl_cavalo,
+                pl_carreta: cliente.pl_carreta,
                 motorista: cliente.motorista,
                 origem: cliente.origem,
                 destino: cliente.destino,
                 ajudantes: cliente.ajudantes,
-                conferentes: cliente.conferentes
+                conferente: cliente.conferente,
+                status: cliente.status
             };
         });
 
         return res.json(clientesFormatados);
     } catch (error) {
-        console.log(error);
-        return res.status(500).json({ Mensagem: `Erro interno do servidor ${error}` });
+
+        return res.status(500).json({ Mensagem: `Erro interno do servidor em buscar clientes ${error}` });
     }
 }
 
