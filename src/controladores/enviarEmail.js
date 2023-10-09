@@ -28,7 +28,7 @@ const enviarEmailComDados = async (destinatario, dados) => {
 
         // Configurar o e-mail
         const mailOptions = {
-            from: 'flaviopcfake@gmail.com',
+            from: 'flaviopc2@gmail.com',
             to: destinatario,
             subject: 'Lista de Clientes',
             text: emailBody, // Usar o corpo do e-mail como texto simples
