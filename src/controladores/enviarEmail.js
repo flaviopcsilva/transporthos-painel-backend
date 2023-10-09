@@ -19,7 +19,7 @@ const enviarEmailComDados = async (destinatario, dados) => {
         let emailBody = 'Lista de Clientes:\n\n';
 
         dados.forEach((cliente, index) => {
-            emailBody += `Cliente ID ${index + 1}:\n`;
+            emailBody += `Cliente ID ${cliente.id}:\n`;
             emailBody += `Nome: ${cliente.cliente}\n`;
             emailBody += `Data: ${cliente.data}\n`;
             emailBody += `Hora: ${cliente.hora}\n`;
