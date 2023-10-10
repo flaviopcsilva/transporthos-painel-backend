@@ -1,5 +1,8 @@
 const knex = require('../database/conexao')
 
+const fs = require('fs');
+const PDFDocument = require('pdfkit');
+
 
 const listarClientes = async (req, res) => {
     try {
@@ -156,6 +159,7 @@ const buscarCliente = async (req, res) => {
                 status: cliente.status
             };
         });
+
 
         return res.json(clientesFormatados);
     } catch (error) {
