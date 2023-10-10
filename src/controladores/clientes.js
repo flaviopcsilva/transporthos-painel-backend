@@ -38,7 +38,7 @@ const listarClientes = async (req, res) => {
                 origem: cliente.origem,
                 destino: cliente.destino,
                 ajudantes: cliente.ajudantes,
-                conferentes: cliente.conferentes,
+                conferentes: cliente.conferente,
                 status: cliente.status
 
             };
