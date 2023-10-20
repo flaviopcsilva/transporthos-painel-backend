@@ -31,7 +31,7 @@ const crialogin = async (req, res) => {
         })
     } catch (error) {
         console.log(error.message);
-        return res.status(500).json({ mensagem: 'Erro interno do servidor' })
+        return res.status(500).json({ mensagem: ` Erro interno do servidor ${error.message}` })
     }
 }
 
