@@ -3,6 +3,8 @@ const { listarClientes, cadastrarClientes, editarCliente, excluirCliente, buscar
 const validarCorpoRequisicao = require('./intermediarios/validarCorpoDaRequisicao')
 const { schemaPlacas } = require('./validacoes/schema')
 const { listarClientesEmail } = require('./controladores/enviarEmail')
+const crialogin = require('./controladores/login')
+const { cadastrarUsuario, ListarUsuarios } = require('./controladores/usuarios')
 
 
 const rotas = express()
@@ -10,6 +12,10 @@ const rotas = express()
 rotas.get('/', (req, res) => {
     return res.json('Rota Funcionando!')
 })
+
+rotas.post('/login', crialogin)
+rotas.get('/usuario', ListarUsuarios)
+rotas.post('/usuario', cadastrarUsuario)
 
 rotas.get('/clientes', listarClientes)
 
