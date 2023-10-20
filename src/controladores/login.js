@@ -12,13 +12,13 @@ const crialogin = async (req, res) => {
         const usuarios = await knex('usuarios').where({ usuario }).first()
 
         if (!usuarios) {
-            return res.status(404).json({ mensagem: 'Email ou senha inválida' })
+            return res.status(404).json({ mensagem: 'Usuário ou senha inválida' })
         }
 
         const senhaCorreta = await bcrypt.compare(senha, usuarios.senha)
 
         if (!senhaCorreta) {
-            return res.status(404).json({ mensagem: 'Email ou senha inválida' })
+            return res.status(404).json({ mensagem: 'Usuário ou senha inválida' })
         }
 
         const token = jwt.sign({ id: usuarios.id }, process.env.SENHA_JWT, { expiresIn: '8h' })
