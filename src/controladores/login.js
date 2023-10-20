@@ -21,7 +21,7 @@ const crialogin = async (req, res) => {
             return res.status(404).json({ mensagem: 'Usuário ou senha inválida' })
         }
 
-        const token = jwt.sign({ id: usuarios.id }, process.env.SENHA_JWT, { expiresIn: '2m' })
+        const token = jwt.sign({ id: usuarios.id }, process.env.SENHA_JWT, { expiresIn: '30m' })
 
         const { senha: _, ...dadosUsuario } = usuarios
 
