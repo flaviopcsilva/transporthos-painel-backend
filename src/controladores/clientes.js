@@ -7,6 +7,7 @@ const PDFDocument = require('pdfkit');
 const listarClientes = async (req, res) => {
     try {
         const clientes = await knex('clientes2')
+            .whereNot(knex.raw('LOWER(status) = ?', 'concluído'))
             .orderBy('data')
             .orderBy('hora')
 
@@ -255,6 +256,12 @@ const editarCliente = async (req, res) => {
         // Verifique se a atualização foi bem-sucedida (resultadoAtualizacao > 0)
         if (resultadoAtualizacao > 0) {
             return res.status(200).json({ Mensagem: 'Cliente atualizado com sucesso' });
+
+            if (status === Concluído) {
+
+            }
+
+
         } else {
             return res.status(404).json({ Mensagem: 'Cliente não encontrado' });
         }
