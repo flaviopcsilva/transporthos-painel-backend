@@ -159,7 +159,7 @@ const cadastrarClientes = async (req, res) => {
 
 const buscarCliente = async (req, res) => {
     try {
-        const { busca } = req.body; // Obtém o nome do cliente do corpo da requisição
+        const { busca } = req.query; // Obtém o nome do cliente do corpo da requisição
 
         // Verifica se o nome do cliente foi fornecido na requisição
         if (!busca) {
