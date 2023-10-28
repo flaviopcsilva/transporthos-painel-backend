@@ -3,9 +3,9 @@ const joi = require('joi')
 // Esquema de validação para os campos plcavalo e plcarreta
 const schemaPlacas = joi.object({
 
-    dataAbreviada: joi.string().required().messages({
+    dataAbreviada: joi.string().required().allow('', null).messages({
         'any.required': 'O campo Data é obrigatório',
-        'string.empty': 'O campo Data é obrigatório'
+        'string.empty': 'O campo Data Não pode está vazio'
     }),
     horaAbreviada: joi.string().required().messages({
         'any.required': 'O campo Hora é obrigatório',
