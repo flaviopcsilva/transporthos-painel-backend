@@ -1,5 +1,5 @@
 const express = require('express')
-const { listarClientes, cadastrarClientes, editarCliente, excluirCliente, buscarCliente } = require('./controladores/clientes')
+const { listarClientes, cadastrarClientes, editarCliente, excluirCliente, buscarCliente, listagemDeClientesCompleta } = require('./controladores/clientes')
 const validarCorpoRequisicao = require('./intermediarios/validarCorpoDaRequisicao')
 const { schemaPlacas } = require('./validacoes/schema')
 const { listarClientesEmail } = require('./controladores/enviarEmail')
@@ -14,6 +14,7 @@ rotas.get('/', (req, res) => {
 })
 
 rotas.post('/login', crialogin)
+rotas.get('/listagemcompleta', listagemDeClientesCompleta)
 rotas.get('/usuario', ListarUsuarios)
 rotas.post('/usuario', cadastrarUsuario)
 

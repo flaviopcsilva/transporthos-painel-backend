@@ -52,6 +52,54 @@ const listarClientes = async (req, res) => {
     }
 }
 
+const listagemDeClientesCompleta = async (req, res) => {
+    try {
+        const clientes = await knex('clientes2')
+            .orderBy('data')
+            .orderBy('hora')
+
+        // Mapeia os resultados para formatar a data abreviada
+        const clientesFormatados = clientes.map(cliente => {
+            const data = new Date(cliente.data);
+            const hora = new Date(`1970-01-01T${cliente.hora}`);
+
+            // Obtém a hora e os minutos do objeto Date
+            const horas = hora.getHours();
+            const minutos = hora.getMinutes();
+
+            const dataAbreviada = `${data.getDate()}/${data.getMonth() + 1}/${data.getFullYear()}`;
+            const horaAbreviada = `${horas}:${minutos.toString().padStart(2, '0')}`;
+
+            return {
+                id: cliente.id,
+                data: `${data.getDate()}/${data.getMonth() + 1}/${data.getFullYear()}`,
+                hora: horaAbreviada,
+                cliente: cliente.cliente,
+                quantidade: cliente.quantidade,
+                di: cliente.di,
+                dta: cliente.dta,
+                tipoDeCarga: cliente.tipo_de_carga,
+                processo: cliente.processo,
+                plCavalo: cliente.pl_cavalo,
+                plCarreta: cliente.pl_carreta,
+                motorista: cliente.motorista,
+                origem: cliente.origem,
+                destino: cliente.destino,
+                ajudantes: cliente.ajudantes,
+                conferentes: cliente.conferente,
+                status: cliente.status
+
+            };
+        });
+
+        return res.json(clientesFormatados);
+    } catch (error) {
+
+        return res.status(500).json({ Mensagem: `Erro interno do servidor em listar clientes ${error}` })
+    }
+}
+
+
 const cadastrarClientes = async (req, res) => {
     try {
         const { dataAbreviada, horaAbreviada, cliente, quantidade, di, dta, tipo_de_carga, processo, pl_cavalo, pl_carreta, motorista, origem, destino, ajudantes, conferente, status } = req.body; // Obtenha os dados do corpo da requisição
@@ -276,5 +324,6 @@ module.exports = {
     cadastrarClientes,
     buscarCliente,
     excluirCliente,
-    editarCliente
+    editarCliente,
+    listagemDeClientesCompleta
 }
