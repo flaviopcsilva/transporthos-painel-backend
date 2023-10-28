@@ -45,6 +45,18 @@ const schemaPlacas = joi.object({
         'string.empty': 'O campo Processo é obrigatório'
     }),
 
+    pl_cavalo: joi.string().max(7).required().messages({
+        'string.max': 'O Campo Cavalo tem que ter no máximo 7 caracteres',
+        'any.required': 'O campo Cavalo é obrigatório',
+        'string.empty': 'O campo Cavalo é obrigatório'
+
+    }),
+    pl_carreta: joi.string().max(7).required().messages({
+        'string.max': 'O Campo Carreta tem que ter no máximo 7 caracteres',
+        'any.required': 'O campo Carreta é obrigatório',
+        'string.empty': 'O campo Carreta é obrigatório'
+    }),
+
     motorista: joi.string().required().messages({
         'any.required': 'O campo Motorista é obrigatório',
         'string.empty': 'O campo Motorista é obrigatório'
@@ -75,12 +87,7 @@ const schemaPlacas = joi.object({
         'string.empty': 'O campo Status é obrigatório'
     }),
 
-    pl_cavalo: joi.string().max(7).messages({
-        'string.max': 'O Campo Placa Cavalo tem que ter no máximo 7 caracteres'
-    }),
-    pl_carreta: joi.string().max(7).messages({
-        'string.max': 'O Campo Placa Carreta tem que ter no máximo 7 caracteres'
-    })
+
 });
 
 module.exports = {
