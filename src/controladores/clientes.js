@@ -55,6 +55,7 @@ const listarClientes = async (req, res) => {
 const listagemDeClientesCompleta = async (req, res) => {
     try {
         const clientes = await knex('clientes2')
+            .orderBy(knex.raw('CASE WHEN LOWER(status) = ? THEN 1 ELSE 0 END', ['concluído']))
             .orderBy('data')
             .orderBy('hora')
 
