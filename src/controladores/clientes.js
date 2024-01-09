@@ -162,7 +162,7 @@ const buscarCliente = async (req, res) => {
     try {
         const { busca } = req.query; // Obtém o nome do cliente do corpo da requisição
 
-        // Verifica se o nome do cliente foi fornecido na requisição
+        // Verifica se o nome do cliente foi fornecido na requisição.
         if (!busca) {
             return res.status(400).json({ Mensagem: 'O nome do cliente é obrigatório no corpo da requisição' });
         }
