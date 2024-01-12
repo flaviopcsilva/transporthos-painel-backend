@@ -2,7 +2,7 @@ const express = require('express')
 const { listarClientes, cadastrarClientes, editarCliente, excluirCliente, buscarCliente, listagemDeClientesCompleta } = require('./controladores/clientes')
 const validarCorpoRequisicao = require('./intermediarios/validarCorpoDaRequisicao')
 const { schemaPlacas } = require('./validacoes/schema')
-const { listarClientesEmail } = require('./controladores/enviarEmail')
+const { listarClientesEmail, buscarClientePdf } = require('./controladores/enviarEmail')
 const crialogin = require('./controladores/login')
 const { cadastrarUsuario, ListarUsuarios } = require('./controladores/usuarios')
 
@@ -19,7 +19,7 @@ rotas.get('/usuario', ListarUsuarios)
 rotas.post('/usuario', cadastrarUsuario)
 
 rotas.get('/clientes', listarClientes)
-
+rotas.get('/clientepdf', buscarClientePdf)
 rotas.post('/clientes', validarCorpoRequisicao(schemaPlacas), cadastrarClientes)
 rotas.put('/cliente/:id', validarCorpoRequisicao(schemaPlacas), editarCliente)
 rotas.delete('/cliente/:id', excluirCliente)

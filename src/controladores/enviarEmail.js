@@ -89,7 +89,7 @@ const listarClientesEmail = async (req, res) => {
         });
 
         // Enviar e-mail com a lista de clientes em PDF
-        await enviarEmailComDados('flaviopc2@gmail.com', clientesFormatados);
+        await enviarEmailComDados('flaviopcfake@gmail.com', clientesFormatados);
 
         // Retornar os clientes como resposta JSON
         return res.status(200).json(clientesFormatados);

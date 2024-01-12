@@ -1,5 +1,5 @@
 const knex = require('../database/conexao')
-
+const nodemailer = require('nodemailer')
 const fs = require('fs');
 const PDFDocument = require('pdfkit');
 
@@ -304,13 +304,68 @@ const editarCliente = async (req, res) => {
 
         // Verifique se a atualização foi bem-sucedida (resultadoAtualizacao > 0)
         if (resultadoAtualizacao > 0) {
-            return res.status(200).json({ Mensagem: 'Cliente atualizado com sucesso' });
+            if (novosDadosCliente.status === 'Concluído') {
+                // Gere o PDF
+                const pdfDoc = new PDFDocument();
+                pdfDoc.pipe(fs.createWriteStream('cliente.pdf'));
 
-            if (status === Concluído) {
+                pdfDoc.fontSize(24).fillColor('blue').text('Detalhes do Cliente:', { align: 'center', bold: true, underline: true });
+                pdfDoc.moveDown(); // Adiciona uma linha em branco
+                pdfDoc.fontSize(20).text(`Data: ${novosDadosCliente.data}`);
+                pdfDoc.fontSize(20).text(`Hora: ${novosDadosCliente.hora}`);
+                pdfDoc.fontSize(20).text(`Cliente: ${novosDadosCliente.cliente}`);
+                pdfDoc.fontSize(20).text(`Quantidade: ${novosDadosCliente.quantidade}`);
+                pdfDoc.fontSize(20).text(`DI: ${novosDadosCliente.di}`);
+                pdfDoc.fontSize(20).text(`DTA: ${novosDadosCliente.dta}`);
+                pdfDoc.fontSize(20).text(`Tipo de Carga: ${novosDadosCliente.tipo_de_carga}`);
+                pdfDoc.fontSize(20).text(`Processo: ${novosDadosCliente.processo}`);
+                pdfDoc.fontSize(20).text(`Cavalo: ${novosDadosCliente.pl_cavalo}`);
+                pdfDoc.fontSize(20).text(`Carreta: ${novosDadosCliente.pl_carreta}`);
+                pdfDoc.fontSize(20).text(`Motorista: ${novosDadosCliente.motorista}`);
+                pdfDoc.fontSize(20).text(`Origem: ${novosDadosCliente.origem}`);
+                pdfDoc.fontSize(20).text(`Destino: ${novosDadosCliente.destino}`);
+                pdfDoc.fontSize(20).text(`Ajudantes: ${novosDadosCliente.ajudantes}`);
+                pdfDoc.fontSize(20).text(`Conferente: ${novosDadosCliente.conferente}`);
+                pdfDoc.fontSize(20).text(`Status: ${novosDadosCliente.status}`);
+                // Adicione mais campos conforme necessário
 
+                pdfDoc.end();
+
+                // Configurações para o envio de e-mail
+                const transporter = nodemailer.createTransport({
+                    host: process.env.EMAIL_HOST,
+                    port: process.env.EMAIL_PORT,
+                    auth: {
+                        user: process.env.EMAIL_USER,
+                        pass: process.env.EMAIL_PASS
+                    }
+                });
+
+                const mailOptions = {
+                    from: 'flaviopc2@gmail.com',
+                    to: 'flaviopcfake@gmail.com',
+                    cc: 'lucas_cosllop@hotmail.com',
+                    subject: 'Detalhes do Cliente com Rota Concluída',
+                    text: 'Por favor, encontre em anexo os detalhes do cliente com a rota finalizada.',
+                    attachments: [{
+                        filename: 'cliente.pdf',
+                        path: 'cliente.pdf',
+                        encoding: 'base64'
+                    }]
+                };
+
+                // Envie o e-mail
+                transporter.sendMail(mailOptions, (error, info) => {
+                    if (error) {
+                        return res.status(500).json({ Mensagem: `Erro ao enviar o e-mail: ${error}` });
+                    }
+                    console.log('E-mail enviado:', info.response);
+                    return res.status(200).json({ Mensagem: 'Cliente atualizado com sucesso e e-mail enviado' });
+                });
+            } else {
+                // Se o status não for "Concluído", apenas retorne uma resposta de sucesso
+                return res.status(200).json({ Mensagem: 'Cliente atualizado com sucesso' });
             }
-
-
         } else {
             return res.status(404).json({ Mensagem: 'Cliente não encontrado' });
         }
