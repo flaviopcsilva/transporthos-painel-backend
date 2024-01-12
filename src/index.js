@@ -5,7 +5,16 @@ const rotas = require('./rotas')
 const cors = require('cors')
 const app = express()
 
-app.use(cors())
+// Configuração para permitir CORS apenas do seu domínio frontend
+const corsOptions = {
+    origin: 'https://painel-transporthos.vercel.app', // Substitua pelo seu domínio frontend
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    optionsSuccessStatus: 204,
+}
+
+app.use(cors(corsOptions))
+
 app.use(express.json())
 
 app.use(rotas)
