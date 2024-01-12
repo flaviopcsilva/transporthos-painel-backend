@@ -347,11 +347,11 @@ const editarCliente = async (req, res) => {
                     cc: 'lucas_cosllop@hotmail.com',
                     subject: 'Detalhes do Cliente com Rota Concluída',
                     text: 'Por favor, encontre em anexo os detalhes do cliente com a rota finalizada.',
-                    attachments: [{
-                        filename: 'cliente.pdf',
-                        path: 'cliente.pdf',
-                        encoding: 'base64'
-                    }]
+                    // attachments: [{
+                    //     filename: 'cliente.pdf',
+                    //     path: 'cliente.pdf',
+                    //     encoding: 'base64'
+                    // }]
                 };
 
                 // Envie o e-mail
