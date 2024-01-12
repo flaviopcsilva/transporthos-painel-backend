@@ -15,6 +15,13 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+app.use(cors());
+
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Erro interno do servidor');
+});
+
 // Middleware para lidar com o preflight request
 app.options('*', cors(corsOptions));
 
