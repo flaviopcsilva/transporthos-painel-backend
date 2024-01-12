@@ -17,9 +17,8 @@ const schemaPlacas = joi.object({
         'string.empty': 'O campo Cliente é obrigatório'
     }),
 
-    quantidade: joi.number().max(50).positive().required().messages({
+    quantidade: joi.number().positive().required().messages({
         'number.positive': 'Tem que ser um valor maior que zero.',
-        'number.max': 'O Campo Quantidade deve ser um número menor ou igual a 50',
         'any.required': 'O campo Quantidade é obrigatório',
         'string.empty': 'O campo Quantidade é obrigatório',
         'number.base': 'O Campo Quantidade deve ser um número'
