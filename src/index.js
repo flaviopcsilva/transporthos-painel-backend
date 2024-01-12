@@ -7,7 +7,7 @@ const app = express()
 
 // Configuração para permitir CORS apenas do seu domínio frontend
 const corsOptions = {
-    origin: 'https://transporthos-painel-backend.vercel.app', // Substitua pelo seu domínio frontend
+    origin: 'https://painel-transporthos.vercel.app/painel', // Substitua pelo seu domínio frontend
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
     optionsSuccessStatus: 204,
