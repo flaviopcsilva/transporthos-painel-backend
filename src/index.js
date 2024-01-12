@@ -10,7 +10,7 @@ const corsOptions = {
     origin: 'https://painel-transporthos.vercel.app', // Substitua pelo seu domínio frontend
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
-    optionsSuccessStatus: 204,
+    optionsSuccessStatus: 200,
 };
 
 app.use(cors(corsOptions));
