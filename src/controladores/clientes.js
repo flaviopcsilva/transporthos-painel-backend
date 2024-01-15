@@ -1,7 +1,9 @@
-const knex = require('../database/conexao')
+const knex = require('../database/conexao');
 const nodemailer = require('nodemailer')
 const fs = require('fs');
 const PDFDocument = require('pdfkit');
+const AWS = require('aws-sdk');
+const s3 = new AWS.S3();
 
 
 const listarClientes = async (req, res) => {
@@ -331,6 +333,35 @@ const editarCliente = async (req, res) => {
 
                 //     pdfDoc.end();
 
+                // Gere o PDF
+                // const pdfDoc = new PDFDocument();
+                // const pdfBuffer = await new Promise((resolve) => {
+                //     pdfDoc.pipe(fs.createWriteStream('cliente.pdf'));
+                //     pdfDoc.fontSize(24).fillColor('blue').text('Detalhes do Cliente:', { align: 'center', bold: true, underline: true });
+                //     pdfDoc.moveDown(); // Adiciona uma linha em branco
+                //     pdfDoc.fontSize(20).text(`Data: ${novosDadosCliente.data}`);
+                //     pdfDoc.fontSize(20).text(`Hora: ${novosDadosCliente.hora}`);
+                //     pdfDoc.fontSize(20).text(`Cliente: ${novosDadosCliente.cliente}`);
+                //     // Adicione mais campos conforme necessário
+                //     pdfDoc.end();
+                //     const pdfData = fs.readFileSync('cliente.pdf');
+                //     resolve(pdfData);
+                // });
+
+                // // Salva o arquivo PDF no Amazon S3
+                // const s3Params = {
+                //     Bucket: 'cubosacademyupload',
+                //     Key: `caminho/do/arquivo/cliente_${id}.pdf`, // Use um nome de arquivo exclusivo, talvez incluindo o ID do cliente
+                //     Body: pdfBuffer,
+                //     ContentType: 'application/pdf'
+                // };
+
+                // Construir o corpo do e-mail com os dados formatados
+                let emailBody = 'Cliente com rota concluída\n\n';
+                emailBody += `Data: ${dataAbreviada} \n`;
+                emailBody += `Hora: ${horaAbreviada} \n`;
+                emailBody += `Cliente: ${novosDadosCliente.cliente} \n`;
+
                 // Configurações para o envio de e-mail
                 const transporter = nodemailer.createTransport({
                     host: process.env.EMAIL_HOST,
@@ -340,13 +371,13 @@ const editarCliente = async (req, res) => {
                         pass: process.env.EMAIL_PASS
                     }
                 });
-
+                //'Por favor, encontre em anexo os detalhes do cliente com a rota finalizada.'
                 const mailOptions = {
                     from: 'flaviopc2@gmail.com',
                     to: 'flaviopcfake@gmail.com',
                     cc: 'lucas_cosllop@hotmail.com',
                     subject: 'Detalhes do Cliente com Rota Concluída',
-                    text: 'Por favor, encontre em anexo os detalhes do cliente com a rota finalizada.',
+                    text: emailBody,
                     // attachments: [{
                     //     filename: 'cliente.pdf',
                     //     path: 'cliente.pdf',
