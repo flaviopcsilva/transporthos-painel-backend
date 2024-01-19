@@ -361,6 +361,20 @@ const editarCliente = async (req, res) => {
                 emailBody += `Data: ${dataAbreviada} \n`;
                 emailBody += `Hora: ${horaAbreviada} \n`;
                 emailBody += `Cliente: ${novosDadosCliente.cliente} \n`;
+                emailBody += `Quantidade: ${novosDadosCliente.quantidade} \n`;
+                emailBody += `DI: ${novosDadosCliente.di} \n`;
+                emailBody += `DTA: ${novosDadosCliente.dta} \n`;
+                emailBody += `Tipo de Carga: ${novosDadosCliente.tipo_de_carga} \n`;
+                emailBody += `Processo: ${novosDadosCliente.processo} \n`;
+                emailBody += `Cavalo: ${novosDadosCliente.pl_cavalo} \n`;
+                emailBody += `Carreta: ${novosDadosCliente.pl_carreta} \n`;
+                emailBody += `Motorista: ${novosDadosCliente.motorista} \n`;
+                emailBody += `Origem: ${novosDadosCliente.origem} \n`;
+                emailBody += `Destino: ${novosDadosCliente.destino} \n`;
+                emailBody += `Ajudantes: ${novosDadosCliente.ajudantes} \n`;
+                emailBody += `Conferente: ${novosDadosCliente.conferente} \n`;
+                emailBody += `Status: ${novosDadosCliente.status} \n`;
+
 
                 // Configurações para o envio de e-mail
                 const transporter = nodemailer.createTransport({
