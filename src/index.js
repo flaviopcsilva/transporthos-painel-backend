@@ -8,16 +8,16 @@ const app = express()
 // Configuração para permitir CORS apenas do seu domínio frontend
 
 
-// const corsOptions = {
-//     origin: 'https://painel-transporthos.vercel.app', // Substitua pelo seu domínio frontend
-//     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-//     credentials: true,
-//     optionsSuccessStatus: 200,
-// };
+const corsOptions = {
+    origin: ['https://painel-transporthos.vercel.app', 'http://localhost:4200'], // Substitua pelo seu domínio frontend
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    optionsSuccessStatus: 200,
+};
 
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
-app.use(cors());
+
 
 app.use((err, req, res, next) => {
     console.error(err.stack);
