@@ -70,13 +70,13 @@ async function enviarPDF(req, res) {
         console.log('E-mail enviado: %s', info.messageId);
         res.status(200).json({ message: 'E-mail enviado com sucesso!' });
 
-        // Exclui o arquivo PDF após o envio
-        fs.unlinkSync(caminhoArquivoPDF);
+
     } catch (error) {
         console.log(error);
         res.status(500).json({ Mensagem: 'Erro ao enviar Email!' }, error)
     }
-
+    // Exclui o arquivo PDF após o envio
+    fs.unlinkSync(caminhoArquivoPDF);
 
 }
 
