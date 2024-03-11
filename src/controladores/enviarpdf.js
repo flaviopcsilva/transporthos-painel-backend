@@ -58,12 +58,12 @@ async function enviarPDF(req, res) {
             to: email, // O e-mail do destinatário
             subject: 'Follow Up PDF', // Assunto do e-mail
             text: 'Segue anexo arquivo PDF com Followup atualizado.', // Corpo do e-mail em texto plano
-            attachments: [
-                {
-                    filename: nomeArquivoPDF,
-                    path: caminhoArquivoPDF
-                }
-            ]
+            // attachments: [
+            //     {
+            //         filename: nomeArquivoPDF,
+            //         path: caminhoArquivoPDF
+            //     }
+            // ]
         };
         const info = await transporter.sendMail(mailOptions);
 
