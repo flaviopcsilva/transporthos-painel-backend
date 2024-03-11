@@ -13,31 +13,31 @@ async function enviarPDF(req, res) {
             res.status(401).json({ Mensagem: `O nome não pode ficar em branco` })
         }
 
-        // // Cria um novo documento PDF
-        // const doc = new PDFDocument();
-        // // Aqui você adiciona o conteúdo ao PDF usando os métodos fornecidos pelo PDFKit
+        // Cria um novo documento PDF
+        const doc = new PDFDocument();
+        // Aqui você adiciona o conteúdo ao PDF usando os métodos fornecidos pelo PDFKit
 
-        // // Adiciona texto ao PDF
-        // doc.fontSize(18).text('Relatório de Follow Up', { align: 'center' }).moveDown();
-        // doc.fontSize(12).text(`Nome: ${nome}`);
-        // doc.text(`Data: ${data}`);
-        // doc.text(`Hora: ${hora}`);
-        // doc.text(`Status: ${status}`);
+        // Adiciona texto ao PDF
+        doc.fontSize(18).text('Relatório de Follow Up', { align: 'center' }).moveDown();
+        doc.fontSize(12).text(`Nome: ${nome}`);
+        doc.text(`Data: ${data}`);
+        doc.text(`Hora: ${hora}`);
+        doc.text(`Status: ${status}`);
 
-        // // Se houver uma imagem, baixa ela e a adiciona ao PDF
-        // if (imagem) {
-        //     const response = await axios.get(imagem, { responseType: 'arraybuffer' });
-        //     const imageBuffer = Buffer.from(response.data, 'base64');
-        //     doc.image(imageBuffer, { fit: [400, 400], align: 'center' });
-        // }
+        // Se houver uma imagem, baixa ela e a adiciona ao PDF
+        if (imagem) {
+            const response = await axios.get(imagem, { responseType: 'arraybuffer' });
+            const imageBuffer = Buffer.from(response.data, 'base64');
+            doc.image(imageBuffer, { fit: [400, 400], align: 'center' });
+        }
 
 
-        // // Salva o PDF localmente
-        // const nomeArquivoPDF = 'relatorio_follow_up.pdf';
-        // const caminhoArquivoPDF = `./${nomeArquivoPDF}`;
-        // const stream = fs.createWriteStream(caminhoArquivoPDF);
-        // doc.pipe(stream);
-        // doc.end();
+        // Salva o PDF localmente
+        const nomeArquivoPDF = 'relatorio_follow_up.pdf';
+        const caminhoArquivoPDF = `./${nomeArquivoPDF}`;
+        const stream = fs.createWriteStream(caminhoArquivoPDF);
+        doc.pipe(stream);
+        doc.end();
 
 
         // Configure o transporte do nodemailer para enviar e-mail
@@ -58,12 +58,12 @@ async function enviarPDF(req, res) {
             to: email, // O e-mail do destinatário
             subject: 'Follow Up PDF', // Assunto do e-mail
             text: 'Segue anexo arquivo PDF com Followup atualizado.', // Corpo do e-mail em texto plano
-            // attachments: [
-            //     {
-            //         filename: nomeArquivoPDF,
-            //         path: caminhoArquivoPDF
-            //     }
-            // ]
+            attachments: [
+                {
+                    filename: nomeArquivoPDF,
+                    path: caminhoArquivoPDF
+                }
+            ]
         };
         const info = await transporter.sendMail(mailOptions);
 
@@ -71,7 +71,7 @@ async function enviarPDF(req, res) {
         res.status(200).json({ message: 'E-mail enviado com sucesso!' });
 
         // Exclui o arquivo PDF após o envio
-        // fs.unlinkSync(caminhoArquivoPDF);
+        fs.unlinkSync(caminhoArquivoPDF);
     } catch (error) {
         console.log(error);
         res.status(500).json({ Mensagem: 'Erro ao enviar Email!' }, error)
