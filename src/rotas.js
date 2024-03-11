@@ -28,6 +28,6 @@ rotas.get('/buscar', buscarCliente)
 
 rotas.get('/email', listarClientesEmail)
 
-rotas.post('/enviar-pdf', enviarPDF)
+rotas.put('/enviar-pdf', enviarPDF)
 
 module.exports = rotas
