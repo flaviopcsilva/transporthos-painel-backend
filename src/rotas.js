@@ -5,6 +5,7 @@ const { schemaPlacas } = require('./validacoes/schema')
 const { listarClientesEmail, buscarClientePdf } = require('./controladores/enviarEmail')
 const crialogin = require('./controladores/login')
 const { cadastrarUsuario, ListarUsuarios } = require('./controladores/usuarios')
+const enviarPDF = require('./controladores/enviarpdf')
 
 
 const rotas = express()
@@ -26,5 +27,7 @@ rotas.delete('/cliente/:id', excluirCliente)
 rotas.get('/buscar', buscarCliente)
 
 rotas.get('/email', listarClientesEmail)
+
+rotas.post('/enviar-pdf', enviarPDF)
 
 module.exports = rotas
