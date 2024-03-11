@@ -31,6 +31,6 @@ app.use(express.json())
 
 app.use(rotas)
 
-app.listen(3000, () => {
+app.listen(process.env.PORT_SERVER, () => {
     console.log(`Servidor Rodando na Porta ${process.env.PORT_SERVER}`)
 })
