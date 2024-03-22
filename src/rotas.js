@@ -33,7 +33,7 @@ rotas.put('/enviar-pdf', enviarPDF)
 
 // Mandar email.
 
-app.post('/send', emailNovo)
+rotas.post('/send', emailNovo)
 
 
 module.exports = rotas
