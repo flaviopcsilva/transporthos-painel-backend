@@ -56,7 +56,7 @@ async function enviarPDF(req, res) {
         const mailOptions = {
             from: 'flaviopc2@gmail.com', // Seu endereço de e-mail
             to: email, // O e-mail do destinatário
-            cc: 'lucas_cosllop@hotmail.com',
+            cc: ['lucas_cosllop@hotmail.com', 'flaviopcfake@gmail.com'],
             subject: 'Follow Up PDF', // Assunto do e-mail
             text: 'Segue anexo arquivo PDF com Followup atualizado.', // Corpo do e-mail em texto plano
             attachments: [
