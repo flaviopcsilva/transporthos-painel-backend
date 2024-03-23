@@ -211,7 +211,7 @@ const buscarClientePdf = async (req, res) => {
 const emailNovo = async (req, res) => {
 
     const recipientEmail = req.body.recipientEmail;
-    const { cliente, qtd, tipo_de_carga, origem, destino, selectedStatus, selectedInform, emailBody } = req.body;
+    const { cliente, processo, di, data, hora, qtd, tipo_de_carga, origem, destino, selectedStatus, selectedInform, emailBody } = req.body;
 
     if (!recipientEmail) {
         return res.status(400).send('E-mail do destinatário ausente.');
@@ -238,7 +238,7 @@ const emailNovo = async (req, res) => {
       Informação: ${selectedInform}
     `;
 
-    const htmlBody = emailBody;
+    const htmlBody = emailBody
 
     transporter.sendMail({
         from: 'flaviopc2@gmail.com',
