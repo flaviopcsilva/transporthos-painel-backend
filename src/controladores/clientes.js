@@ -288,6 +288,7 @@ const editarCliente = async (req, res) => {
             data: dataFormatada, // Insere a data formatada como Date
             hora: horaFormatada, // Insere a hora formatada como Time
             cliente,
+            cnpj,
             quantidade,
             di,
             dta,
@@ -300,8 +301,7 @@ const editarCliente = async (req, res) => {
             destino,
             ajudantes,
             conferente,
-            status,
-            cnpj
+            status
         }
 
         // Execute uma consulta SQL para atualizar o cliente com o ID fornecido com os novos dados
