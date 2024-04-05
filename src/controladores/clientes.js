@@ -42,7 +42,8 @@ const listarClientes = async (req, res) => {
                 destino: cliente.destino,
                 ajudantes: cliente.ajudantes,
                 conferentes: cliente.conferente,
-                status: cliente.status
+                status: cliente.status,
+                cnpj: cliente.cnpj
 
             };
         });
@@ -90,7 +91,8 @@ const listagemDeClientesCompleta = async (req, res) => {
                 destino: cliente.destino,
                 ajudantes: cliente.ajudantes,
                 conferentes: cliente.conferente,
-                status: cliente.status
+                status: cliente.status,
+                cnpj: cliente.cnpj
 
             };
         });
@@ -105,7 +107,7 @@ const listagemDeClientesCompleta = async (req, res) => {
 
 const cadastrarClientes = async (req, res) => {
     try {
-        const { dataAbreviada, horaAbreviada, cliente, quantidade, di, dta, tipo_de_carga, processo, pl_cavalo, pl_carreta, motorista, origem, destino, ajudantes, conferente, status } = req.body; // Obtenha os dados do corpo da requisição
+        const { dataAbreviada, horaAbreviada, cliente, quantidade, di, dta, tipo_de_carga, processo, pl_cavalo, pl_carreta, motorista, origem, destino, ajudantes, conferente, status, cnpj } = req.body; // Obtenha os dados do corpo da requisição
 
         // Verifica se todos os campos necessários foram fornecidos na requisição
         if (!cliente || !dataAbreviada || !horaAbreviada) {
@@ -145,7 +147,8 @@ const cadastrarClientes = async (req, res) => {
             destino,
             ajudantes,
             conferente,
-            status
+            status,
+            cnpj
         });
 
         const novoCliente = await knex('clientes2').where('id', '=', knex.raw('lastval()')).first();
@@ -208,7 +211,8 @@ const buscarCliente = async (req, res) => {
                 destino: cliente.destino,
                 ajudantes: cliente.ajudantes,
                 conferente: cliente.conferente,
-                status: cliente.status
+                status: cliente.status,
+                cnpj: cliente.cnpj
             };
         });
 
@@ -253,7 +257,7 @@ const excluirCliente = async (req, res) => {
 const editarCliente = async (req, res) => {
     try {
         const { id } = req.params; // Obtenha o ID do cliente a ser editado
-        const { dataAbreviada, horaAbreviada, cliente, quantidade, di, dta, tipo_de_carga, processo, pl_cavalo, pl_carreta, motorista, origem, destino, ajudantes, conferente, status } = req.body; // Obtenha os dados do corpo da requisição
+        const { dataAbreviada, horaAbreviada, cliente, quantidade, di, dta, tipo_de_carga, processo, pl_cavalo, pl_carreta, motorista, origem, destino, ajudantes, conferente, status, cnpj } = req.body; // Obtenha os dados do corpo da requisição
 
 
 
@@ -296,7 +300,8 @@ const editarCliente = async (req, res) => {
             destino,
             ajudantes,
             conferente,
-            status
+            status,
+            cnpj
         }
 
         // Execute uma consulta SQL para atualizar o cliente com o ID fornecido com os novos dados
@@ -361,6 +366,7 @@ const editarCliente = async (req, res) => {
                 emailBody += `Data: ${dataAbreviada} \n`;
                 emailBody += `Hora: ${horaAbreviada} \n`;
                 emailBody += `Cliente: ${novosDadosCliente.cliente} \n`;
+                emailBody += `CNPJ: ${novosDadosCliente.cnpj} \n`;
                 emailBody += `Quantidade: ${novosDadosCliente.quantidade} \n`;
                 emailBody += `DI: ${novosDadosCliente.di} \n`;
                 emailBody += `DTA: ${novosDadosCliente.dta} \n`;

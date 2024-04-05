@@ -84,7 +84,8 @@ const listarClientesEmail = async (req, res) => {
                 destino: cliente.destino,
                 ajudantes: cliente.ajudantes,
                 conferentes: cliente.conferentes,
-                status: cliente.status
+                status: cliente.status,
+                cnpj: cliente.cnpj
             };
         });
 
@@ -149,7 +150,8 @@ const buscarClientePdf = async (req, res) => {
                 destino: cliente.destino,
                 ajudantes: cliente.ajudantes,
                 conferente: cliente.conferente,
-                status: cliente.status
+                status: cliente.status,
+                cnpj: cliente.cnpj
             };
         });
 
@@ -173,6 +175,7 @@ const buscarClientePdf = async (req, res) => {
             doc.fontSize(12)
                 .text(`Cliente ID: ${cliente.id}`)
                 .text(`Nome: ${cliente.cliente}`)
+                .text(`CNPJ: ${cliente.cnpj}`)
                 .text('Data: ', { italic: true, continued: true }) // Deixa "Data" em negrito
                 .text(`${cliente.data}`)
                 .text(`Hora: ${cliente.hora}`)
@@ -211,7 +214,7 @@ const buscarClientePdf = async (req, res) => {
 const emailNovo = async (req, res) => {
 
     const recipientEmail = req.body.recipientEmail;
-    const { cliente, processo, di, data, hora, qtd, tipo_de_carga, origem, destino, selectedStatus, selectedInform, emailBody } = req.body;
+    const { cliente, processo, di, data, hora, qtd, cnpj, tipo_de_carga, origem, destino, selectedStatus, selectedInform, emailBody } = req.body;
 
     if (!recipientEmail) {
         return res.status(400).send('E-mail do destinatário ausente.');
@@ -230,6 +233,7 @@ const emailNovo = async (req, res) => {
 
     const text = `
       Cliente: ${cliente}
+      CNPJ: ${cnpj}
       Quantidade: ${qtd}
       Tipo de Carga: ${tipo_de_carga}
       Origem: ${origem}
