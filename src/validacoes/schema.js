@@ -86,6 +86,11 @@ const schemaPlacas = joi.object({
         'string.empty': 'O campo Status é obrigatório'
     }),
 
+    cnpj: joi.string().required().messages({
+        'any.required': 'O campo CNPJ é obrigatório',
+        'string.empty': 'O campo Status é obrigatório'
+    }),
+
 
 });
 
