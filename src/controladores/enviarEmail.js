@@ -214,7 +214,7 @@ const buscarClientePdf = async (req, res) => {
 const emailNovo = async (req, res) => {
 
     const recipientEmail = req.body.recipientEmail;
-    const { cliente, processo, di, data, hora, qtd, cnpj, tipo_de_carga, origem, destino, selectedStatus, selectedInform, emailBody } = req.body;
+    const { id, cliente, processo, di, data, hora, qtd, cnpj, tipo_de_carga, origem, destino, selectedStatus, selectedInform, emailBody } = req.body;
 
     if (!recipientEmail) {
         return res.status(400).send('E-mail do destinatário ausente.');
@@ -251,7 +251,13 @@ const emailNovo = async (req, res) => {
         subject: subject,
         html: htmlBody
 
-    }).then(info => {
+    }).then(async info => {
+        // Atualizar o campo `informacoes` no banco de dados
+        await knex('clientes2')
+            .where({ id })  // Usando `id` como chave para identificar o registro
+            .update({
+                informacoes: knex.raw('array_append(informacoes, ?)', [selectedInform])
+            });
         res.send(info);
         console.log("E-mail enviado:", info);
     }).catch(error => {
