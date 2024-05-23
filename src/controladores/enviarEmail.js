@@ -215,23 +215,24 @@ const emailNovo = async (req, res) => {
     const recipientEmail = req.body.recipientEmail;
     const { id, cliente, processo, di, data, hora, qtd, cnpj, tipo_de_carga, origem, destino, selectedStatus, selectedInform, emailBody, informacoes } = req.body;
 
-    if (!recipientEmail) {
-        return res.status(400).send('E-mail do destinatário ausente.');
-    }
-
-    const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: process.env.EMAIL_GOOGLE,
-            pass: process.env.SENHA_GOOGLE
+    try {
+        if (!recipientEmail) {
+            return res.status(400).send('E-mail do destinatário ausente.');
         }
-    });
 
-    const subject = `Follow UP: ${selectedInform}`;
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.EMAIL_GOOGLE,
+                pass: process.env.SENHA_GOOGLE
+            }
+        });
+
+        const subject = `Follow UP: ${selectedInform}`;
 
 
 
-    const text = `
+        const text = `
       Cliente: ${cliente}
       CNPJ: ${cnpj}
       Quantidade: ${qtd}
@@ -242,28 +243,34 @@ const emailNovo = async (req, res) => {
       Informação: ${historicoString}
     `;
 
-    const htmlBody = emailBody
+        const htmlBody = emailBody
 
-    transporter.sendMail({
-        from: process.env.EMAIL_GOOGLE,
-        to: recipientEmail,
-        cc: ['lucas_cosllop@hotmail.com', ' flaviopcfake@gmail.com'],
-        subject: subject,
-        html: htmlBody
+        transporter.sendMail({
+            from: process.env.EMAIL_GOOGLE,
+            to: recipientEmail,
+            cc: ['lucas_cosllop@hotmail.com', ' flaviopcfake@gmail.com'],
+            subject: subject,
+            html: htmlBody
 
-    }).then(async info => {
-        // Atualizar o campo `informacoes` no banco de dados
-        await knex('clientes2')
-            .where({ id })  // Usando `id` como chave para identificar o registro
-            .update({
-                informacoes: knex.raw('array_append(informacoes, ?)', [selectedInform])
-            });
-        res.send(info);
-        console.log("E-mail enviado:", info);
-    }).catch(error => {
+        }).then(async info => {
+            // Atualizar o campo `informacoes` no banco de dados
+            await knex('clientes2')
+                .where({ id })  // Usando `id` como chave para identificar o registro
+                .update({
+                    informacoes: knex.raw('array_append(informacoes, ?)', [selectedInform])
+                });
+            res.send(info);
+            console.log("E-mail enviado:", info);
+        }).catch(error => {
+            res.status(500).send(error);
+            console.error("Erro ao enviar o e-mail:", error);
+        });
+
+    } catch (error) {
         res.status(500).send(error);
         console.error("Erro ao enviar o e-mail:", error);
-    });
+    }
+
 
 }
 
