@@ -384,11 +384,10 @@ const editarCliente = async (req, res) => {
 
                 // Configurações para o envio de e-mail
                 const transporter = nodemailer.createTransport({
-                    host: process.env.EMAIL_HOST,
-                    port: process.env.EMAIL_PORT,
+                    service: 'gmail',
                     auth: {
-                        user: process.env.EMAIL_USER,
-                        pass: process.env.EMAIL_PASS
+                        user: process.env.EMAIL_GOOGLE,
+                        pass: process.env.SENHA_GOOGLE
                     }
                 });
                 //'Por favor, encontre em anexo os detalhes do cliente com a rota finalizada.'

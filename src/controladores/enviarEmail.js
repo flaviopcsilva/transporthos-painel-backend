@@ -7,12 +7,11 @@ const enviarEmailComDados = async (destinatario, dados) => {
     try {
         // Configurar o transporte de e-mail com nodemailer
         const transporter = nodemailer.createTransport({
-            host: process.env.EMAIL_HOST,
-            port: process.env.EMAIL_PORT,
+            service: 'gmail',
             auth: {
-                user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASS
-            },
+                user: process.env.EMAIL_GOOGLE,
+                pass: process.env.SENHA_GOOGLE
+            }
         });
 
         // Construir o corpo do e-mail com os dados formatados
@@ -214,22 +213,23 @@ const buscarClientePdf = async (req, res) => {
 const emailNovo = async (req, res) => {
 
     const recipientEmail = req.body.recipientEmail;
-    const { id, cliente, processo, di, data, hora, qtd, cnpj, tipo_de_carga, origem, destino, selectedStatus, selectedInform, emailBody } = req.body;
+    const { id, cliente, processo, di, data, hora, qtd, cnpj, tipo_de_carga, origem, destino, selectedStatus, selectedInform, emailBody, informacoes } = req.body;
 
     if (!recipientEmail) {
         return res.status(400).send('E-mail do destinatário ausente.');
     }
 
     const transporter = nodemailer.createTransport({
-        host: process.env.EMAIL_HOST,
-        port: 587,
+        service: 'gmail',
         auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASS
+            user: process.env.EMAIL_GOOGLE,
+            pass: process.env.SENHA_GOOGLE
         }
     });
 
     const subject = `Follow UP: ${selectedInform}`;
+
+
 
     const text = `
       Cliente: ${cliente}
@@ -239,13 +239,13 @@ const emailNovo = async (req, res) => {
       Origem: ${origem}
       Destino: ${destino}
       Status: ${selectedStatus}
-      Informação: ${selectedInform}
+      Informação: ${historicoString}
     `;
 
     const htmlBody = emailBody
 
     transporter.sendMail({
-        from: 'flaviopc2@gmail.com',
+        from: process.env.EMAIL_GOOGLE,
         to: recipientEmail,
         cc: ['lucas_cosllop@hotmail.com', ' flaviopcfake@gmail.com'],
         subject: subject,
