@@ -384,7 +384,7 @@ const editarCliente = async (req, res) => {
 
                 // Configurações para o envio de e-mail
                 const transporter = nodemailer.createTransport({
-                    service: 'gmail',
+                    service: 'smtp.office365.com',
                     auth: {
                         user: process.env.EMAIL_GOOGLE,
                         pass: process.env.SENHA_GOOGLE
