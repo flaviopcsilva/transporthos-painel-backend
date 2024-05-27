@@ -229,7 +229,7 @@ const emailNovo = async (req, res) => {
         });
 
         const subject = `Follow UP: ${selectedInform}`;
-
+        console.log(cliente)
 
 
         const text = `
