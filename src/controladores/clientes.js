@@ -392,7 +392,7 @@ const editarCliente = async (req, res) => {
                 });
                 //'Por favor, encontre em anexo os detalhes do cliente com a rota finalizada.'
                 const mailOptions = {
-                    from: 'no-reply@transporthos.com.br',
+                    from: 'operacional@transporthos.com.br',
                     to: 'operacional@transporthos.com.br',
                     cc: ['lucas_cosllop@hotmail.com', ' flaviopcfake@gmail.com'],
                     subject: 'Detalhes do Cliente com Rota Concluída',
