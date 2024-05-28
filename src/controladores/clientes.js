@@ -393,7 +393,7 @@ const editarCliente = async (req, res) => {
                 });
                 //'Por favor, encontre em anexo os detalhes do cliente com a rota finalizada.'
                 const mailOptions = {
-                    from: 'operacional@transporthos.com.br',
+                    from: process.env.EMAIL_GOOGLE,
                     to: 'operacional@transporthos.com.br',
                     subject: 'Detalhes do Cliente com Rota Concluída',
                     text: emailBody,
