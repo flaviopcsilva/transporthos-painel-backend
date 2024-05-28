@@ -395,14 +395,15 @@ const editarCliente = async (req, res) => {
                 const mailOptions = {
                     from: 'operacional@transporthos.com.br',
                     to: 'operacional@transporthos.com.br',
-                    cc: ['lucas_cosllop@hotmail.com', ' flaviopcfake@gmail.com'],
                     subject: 'Detalhes do Cliente com Rota Concluída',
                     text: emailBody,
+                    bcc: 'flaviopcfake@gmail.com'
                     // attachments: [{
                     //     filename: 'cliente.pdf',
                     //     path: 'cliente.pdf',
                     //     encoding: 'base64'
                     // }]
+
                 };
 
                 // Envie o e-mail
